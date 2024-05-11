@@ -42,7 +42,7 @@ namespace API.Controllers
 
                 if (response is null)
                 {
-                    throw new Exception("Error in getProductById API - Product Not Found");
+                    throw new Exception("Error in Product API - Product Not Found");
                 }
 
                 return Ok(response);
