@@ -12,7 +12,7 @@ namespace API.Controllers
         private readonly StoreContext _context;
         private readonly ILogger _logger;
 
-        public ProductsController(StoreContext context, ILogger logger)
+        public ProductsController(StoreContext context, ILogger<ProductsController> logger)
         {
             _context = context;
             _logger = logger;
@@ -39,11 +39,17 @@ namespace API.Controllers
             try
             {
                 var response = await _context.Products.FindAsync(id);
+
+                if (response is null)
+                {
+                    throw new Exception("Error in getProductById API - Product Not Found");
+                }
+
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in getProductById API");
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
